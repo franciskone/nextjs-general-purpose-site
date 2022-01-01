@@ -15,10 +15,14 @@ export type ActivityListProps = {
 	list: Activity[]
 }
 
-const activityScoreStyles: Record<HealthinessScore, {
+const activityScoreStyles: Record<HealthinessScore | 'noScore', {
 	color: string,
 	Icon: FC<IconProps>,
 }> = {
+	noScore: {
+		color: 'gray',
+		Icon: CloseCircleIcon,
+	},
 	veryBad: {
 		color: 'red',
 		Icon: CloseCircleIcon,
@@ -43,13 +47,16 @@ const activityScoreStyles: Record<HealthinessScore, {
 
 const dateFormat = 'yyyy-MM-dd H:mm'
 const ActivityItem: FC<Activity> = ({start, end, type, description, score}) => {
-	const { color, Icon } = activityScoreStyles[score]
+	const scoreKey = score || 'noScore'
+	const { color, Icon } = activityScoreStyles[scoreKey]
 	const bgColor = `${color}.200`
 	const fgColor = `${color}.500`
 	const badgeBgColor = `${color}.300`
 	
 	const startDate = format(new Date(start), dateFormat)
-	const endDate = format(new Date(end), dateFormat)
+	const endDate = end !== null
+		? format(new Date(end), dateFormat)
+		: null
 	
 	return (
 		<Box
@@ -66,7 +73,7 @@ const ActivityItem: FC<Activity> = ({start, end, type, description, score}) => {
 					<Badge bg={badgeBgColor}>
 						<Text fontSize='2xl'>{type}</Text>
 					</Badge>
-					<Text fontSize='md'>{startDate} -> {endDate}</Text>
+					<Text fontSize='md'>{startDate} {`->`} {endDate}</Text>
 					<p>{description}</p>
 				</VStack>
 			</HStack>
