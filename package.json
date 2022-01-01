@@ -6,7 +6,9 @@
     "dev": "next dev",
     "dev:debug": "NODE_OPTIONS='--inspect' next dev",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest --watch",
+    "test:ci": "jest --ci"
   },
   "dependencies": {
     "@apollo/client": "^3.5.6",
@@ -22,11 +24,17 @@
     "react-dom": "17.0.2"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
     "@types/date-fns": "^2.6.0",
     "@types/node": "17.0.6",
     "@types/react": "17.0.38",
+    "babel-jest": "^27.4.5",
     "eslint": "8.6.0",
     "eslint-config-next": "12.0.7",
+    "eslint-plugin-testing-library": "^5.0.1",
+    "jest": "^27.4.5",
     "typescript": "4.5.4"
   }
 }

@@ -9,8 +9,8 @@ export type HealthinessScore =
 
 export type Activity = {
 	start: string
-	end: string
+	end: string | null
 	type: ActivityType
-	description: string
-	score: HealthinessScore
+	description: string | null
+	score: HealthinessScore | null
 }
