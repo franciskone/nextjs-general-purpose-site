@@ -98,6 +98,7 @@ export const ActivityListByDate: FC<ActivitiesListByDateProps> = ({daysActivitie
 		>
 			{daysData.map(([day, activities]) => (
 				<VStack
+					key={day}
 					alignItems="stretch"
 					divider={<StackDivider borderColor='gray.200' />}
 					spacing={4}
@@ -106,7 +107,7 @@ export const ActivityListByDate: FC<ActivitiesListByDateProps> = ({daysActivitie
 						{day}
 					</Heading>
 					<VStack alignItems="stretch" spacing={4}>
-						{activities.map(activity => (<ActivityItem {...activity} />))}
+						{activities.map(activity => (<ActivityItem {...activity} key={`${activity.start}__${activity.type}`}/>))}
 					</VStack>
 				</VStack>
 			))}

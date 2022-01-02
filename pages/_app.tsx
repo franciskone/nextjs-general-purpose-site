@@ -18,7 +18,7 @@ const Nav: FC<Nav> = ({ links, currentPath }) => (
 	<nav>
 		<HStack bg="gray.100" p={4} borderRadius={5}>
 			{links.filter(link => link.path !== currentPath).map(({path, label}) => (
-				<NextLink href={path} passHref>
+				<NextLink href={path} passHref key={path}>
 					<Link><b>{label}</b></Link>
 				</NextLink>
 			))}
