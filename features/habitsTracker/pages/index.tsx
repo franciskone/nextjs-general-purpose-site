@@ -34,7 +34,7 @@ export async function getServerSideProps() {
 		{
       query: gql`
 				query Activities {
-					activities {
+					activities(orderBy: start_DESC) {
 						start
 						end
 						type
