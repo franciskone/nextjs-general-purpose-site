@@ -1,16 +1,26 @@
 export type ActivityType = string
 
-export type HealthinessScore =
-| 'veryBad'
-| 'bad'
-| 'normal'
-| 'good'
-| 'veryGood'
+export type CommonHealthinessScore =
+	| 'veryBad'
+	| 'bad'
+	| 'normal'
+	| 'good'
+	| 'veryGood'
 
-export type Activity = {
+export type CmsHealthinessScore = CommonHealthinessScore
+	| null
+
+export type HealthinessScore = CommonHealthinessScore
+	| 'noScore'
+
+export type CmsActivity = {
 	start: string
 	end: string | null
 	type: ActivityType
 	description: string | null
-	score: HealthinessScore | null
+	score: CmsHealthinessScore
 }
+
+export type Activity = CmsActivity & {duration: number | null}
+
+export type ActivitiesListByDate = Record<string, Activity[]>

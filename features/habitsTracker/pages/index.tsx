@@ -2,15 +2,15 @@ import {gql} from '@apollo/client';
 import type {NextPage} from 'next'
 import Head from 'next/head'
 import {HabitsTrackerService} from "../services";
-import {Activity} from "../types";
-import {ActivityList} from "../components/ActivityList";
-
+import {ActivitiesListByDate, CmsActivity} from "../types";
+import {ActivityListByDate} from "../components/ActivityListByDate";
+import {activitiesListByDate} from "../utils/activitiesUtils";
 
 type HabitsTrackerIndexProps = {
-	activities: Activity[]
+	daysActivities: ActivitiesListByDate
 }
 
-const HabitsTrackerIndex: NextPage<HabitsTrackerIndexProps> = ({activities}) => {
+const HabitsTrackerIndex: NextPage<HabitsTrackerIndexProps> = ({daysActivities}) => {
 	
 	return (
 		<div>
@@ -21,7 +21,7 @@ const HabitsTrackerIndex: NextPage<HabitsTrackerIndexProps> = ({activities}) => 
 			</Head>
 			
 			<main>
-				<ActivityList list={activities}/>
+				<ActivityListByDate daysActivities={daysActivities}/>
 			</main>
 		</div>
 	)
@@ -30,7 +30,7 @@ const HabitsTrackerIndex: NextPage<HabitsTrackerIndexProps> = ({activities}) => 
 export default HabitsTrackerIndex
 
 export async function getServerSideProps() {
-  const {data: {activities}} = await HabitsTrackerService.query<{ activities: Activity[] }>(
+  const {data: {activities}} = await HabitsTrackerService.query<{ activities: CmsActivity[] }>(
 		{
       query: gql`
 				query Activities {
@@ -48,6 +48,8 @@ export async function getServerSideProps() {
 	
 	debugger
 	return {
-		props: {activities}, // will be passed to the page component as props
+		props: {
+			daysActivities: activitiesListByDate(activities)
+		}, // will be passed to the page component as props
 	}
 }

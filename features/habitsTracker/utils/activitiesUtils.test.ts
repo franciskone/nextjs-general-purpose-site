@@ -1,9 +1,9 @@
-import {groupActivitiesByDate} from "./activitiesUtils"
-import {Activity} from "../types";
+import {activitiesListByDate} from "./activitiesUtils"
+import {CmsActivity} from "../types";
 
 describe('activitiesUtils', () => {
-	it('groupActivitiesByDate', () => {
-		const inputList: Activity[] = [
+	it('activitiesListByDate', () => {
+		const inputList: CmsActivity[] = [
 			{
 				"start": "2022-01-01T13:30:00+00:00",
 				"end": "2022-01-01T13:35:00+00:00",
@@ -34,14 +34,14 @@ describe('activitiesUtils', () => {
 			},
 			{
 				"start": "2022-01-03T17:45:00+00:00",
-				"end": "2022-01-01T19:46:00+00:00",
+				"end": "2022-01-03T19:46:00+00:00",
 				"type": "watchTv",
 				"description": "Sceneggiato storia De Filippo con Mamma e Papà, mentre programmavo un sito di test con Next js",
 				"score": "veryGood"
 			},
 			{
 				"start": "2022-01-03T19:50:00+00:00",
-				"end": "2022-01-01T20:15:00+00:00",
+				"end": "2022-01-03T20:15:00+00:00",
 				"type": "hobbyWriteCode",
 				"description": null,
 				"score": "normal"
@@ -60,7 +60,7 @@ describe('activitiesUtils', () => {
 				{
 					"start": "2022-01-01T13:30:00+00:00",
 					"end": "2022-01-01T13:35:00+00:00",
-					"duration": null,
+					"duration": 300000,
 					"type": "breakfast",
 					"description": "Solo un mandarino perché c'era la polenta per pranzo",
 					"score": "normal"
@@ -68,7 +68,7 @@ describe('activitiesUtils', () => {
 				{
 					"start": "2022-01-01T14:00:00+00:00",
 					"end": "2022-01-01T14:45:00+00:00",
-					"duration": null,
+					"duration": 2700000,
 					"type": "lunch",
 					"description": "Pranzo di capodanno. Polenta e spuntature di maiale e mezzo bicchiere di vino rosso.",
 					"score": "bad"
@@ -78,7 +78,7 @@ describe('activitiesUtils', () => {
 				{
 					"start": "2022-01-02T15:00:00+00:00",
 					"end": "2022-01-02T16:30:00+00:00",
-					"duration": null,
+					"duration": 5400000,
 					"type": "relax",
 					"description": "Giocato con Bianca sul divano",
 					"score": "veryGood"
@@ -86,7 +86,7 @@ describe('activitiesUtils', () => {
 				{
 					"start": "2022-01-02T16:31:00+00:00",
 					"end": "2022-01-02T17:15:00+00:00",
-					"duration": null,
+					"duration": 2640000,
 					"type": "homeShower",
 					"description": null,
 					"score": "good"
@@ -95,16 +95,16 @@ describe('activitiesUtils', () => {
 			'2022-01-03': [
 				{
 					"start": "2022-01-03T17:45:00+00:00",
-					"end": "2022-01-01T19:46:00+00:00",
-					"duration": null,
+					"end": "2022-01-03T19:46:00+00:00",
+					"duration": 7260000,
 					"type": "watchTv",
 					"description": "Sceneggiato storia De Filippo con Mamma e Papà, mentre programmavo un sito di test con Next js",
 					"score": "veryGood"
 				},
 				{
 					"start": "2022-01-03T19:50:00+00:00",
-					"end": "2022-01-01T20:15:00+00:00",
-					"duration": null,
+					"end": "2022-01-03T20:15:00+00:00",
+					"duration": 1500000,
 					"type": "hobbyWriteCode",
 					"description": null,
 					"score": "normal"
@@ -122,6 +122,6 @@ describe('activitiesUtils', () => {
 			],
 		}
 		
-		expect(groupActivitiesByDate(inputList)).toEqual(outputList)
+		expect(activitiesListByDate(inputList)).toEqual(outputList)
 	})
 })
