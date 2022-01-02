@@ -14,6 +14,9 @@ export type HealthinessScore = CommonHealthinessScore
 	| 'noScore'
 
 export type CmsActivity = {
+	place: string
+	mood: CommonHealthinessScore
+	moodDescription: string | null
 	start: string
 	end: string | null
 	type: ActivityType

@@ -1,5 +1,5 @@
 import {activitiesListByDate} from "./activitiesUtils"
-import {CmsActivity} from "../types";
+import {ActivitiesListByDate, CmsActivity} from "../types";
 
 describe('activitiesUtils', () => {
 	it('activitiesListByDate', () => {
@@ -9,53 +9,74 @@ describe('activitiesUtils', () => {
 				"end": "2022-01-01T13:35:00+00:00",
 				"type": "breakfast",
 				"description": "Solo un mandarino perché c'era la polenta per pranzo",
-				"score": "normal"
+				"score": "normal",
+				"place": "ItalyHome",
+				"mood": "good",
+				"moodDescription": "test",
 			},
 			{
 				"start": "2022-01-01T14:00:00+00:00",
 				"end": "2022-01-01T14:45:00+00:00",
 				"type": "lunch",
 				"description": "Pranzo di capodanno. Polenta e spuntature di maiale e mezzo bicchiere di vino rosso.",
-				"score": "bad"
+				"score": "bad",
+				"place": "ItalyHome",
+				"mood": "good",
+				"moodDescription": "test",
 			},
 			{
 				"start": "2022-01-02T15:00:00+00:00",
 				"end": "2022-01-02T16:30:00+00:00",
 				"type": "relax",
 				"description": "Giocato con Bianca sul divano",
-				"score": "veryGood"
+				"score": "veryGood",
+				"place": "ItalyHome",
+				"mood": "good",
+				"moodDescription": "test",
 			},
 			{
 				"start": "2022-01-02T16:31:00+00:00",
 				"end": "2022-01-02T17:15:00+00:00",
 				"type": "homeShower",
 				"description": null,
-				"score": "good"
+				"score": "good",
+				"place": "ItalyHome",
+				"mood": "good",
+				"moodDescription": "test",
 			},
 			{
 				"start": "2022-01-03T17:45:00+00:00",
 				"end": "2022-01-03T19:46:00+00:00",
 				"type": "watchTv",
 				"description": "Sceneggiato storia De Filippo con Mamma e Papà, mentre programmavo un sito di test con Next js",
-				"score": "veryGood"
+				"score": "veryGood",
+				"place": "ItalyHome",
+				"mood": "good",
+				"moodDescription": "test",
 			},
 			{
 				"start": "2022-01-03T19:50:00+00:00",
 				"end": "2022-01-03T20:15:00+00:00",
 				"type": "hobbyWriteCode",
 				"description": null,
-				"score": "normal"
+				"score": "normal",
+				"place": "ItalyHome",
+				"mood": "good",
+				"moodDescription": "test",
 			},
 			{
 				"start": "2022-01-04T20:30:00+00:00",
 				"end": null,
 				"type": "relax",
 				"description": "Costruisco il sito per questo gestionale mentre guardo la tv coi miei (In più ho fatto una chiamata con Maria Luisa)",
-				"score": "good"
+				"score": "good",
+				"place": "ItalyHome",
+				"mood": "good",
+				"moodDescription": "test",
 			},
 		]
 		
-		const outputList = {
+		const outputList: ActivitiesListByDate = {
 			'2022-01-01': [
 				{
 					"start": "2022-01-01T13:30:00+00:00",
@@ -63,7 +84,10 @@ describe('activitiesUtils', () => {
 					"duration": 300000,
 					"type": "breakfast",
 					"description": "Solo un mandarino perché c'era la polenta per pranzo",
-					"score": "normal"
+					"score": "normal",
+					"place": "ItalyHome",
+					"mood": "good",
+					"moodDescription": "test",
 				},
 				{
 					"start": "2022-01-01T14:00:00+00:00",
@@ -71,7 +95,10 @@ describe('activitiesUtils', () => {
 					"duration": 2700000,
 					"type": "lunch",
 					"description": "Pranzo di capodanno. Polenta e spuntature di maiale e mezzo bicchiere di vino rosso.",
-					"score": "bad"
+					"score": "bad",
+					"place": "ItalyHome",
+					"mood": "good",
+					"moodDescription": "test",
 				},
 			],
 			'2022-01-02': [
@@ -81,7 +108,10 @@ describe('activitiesUtils', () => {
 					"duration": 5400000,
 					"type": "relax",
 					"description": "Giocato con Bianca sul divano",
-					"score": "veryGood"
+					"score": "veryGood",
+					"place": "ItalyHome",
+					"mood": "good",
+					"moodDescription": "test",
 				},
 				{
 					"start": "2022-01-02T16:31:00+00:00",
@@ -89,7 +119,10 @@ describe('activitiesUtils', () => {
 					"duration": 2640000,
 					"type": "homeShower",
 					"description": null,
-					"score": "good"
+					"score": "good",
+					"place": "ItalyHome",
+					"mood": "good",
+					"moodDescription": "test",
 				},
 			],
 			'2022-01-03': [
@@ -99,7 +132,10 @@ describe('activitiesUtils', () => {
 					"duration": 7260000,
 					"type": "watchTv",
 					"description": "Sceneggiato storia De Filippo con Mamma e Papà, mentre programmavo un sito di test con Next js",
-					"score": "veryGood"
+					"score": "veryGood",
+					"place": "ItalyHome",
+					"mood": "good",
+					"moodDescription": "test",
 				},
 				{
 					"start": "2022-01-03T19:50:00+00:00",
@@ -107,7 +143,10 @@ describe('activitiesUtils', () => {
 					"duration": 1500000,
 					"type": "hobbyWriteCode",
 					"description": null,
-					"score": "normal"
+					"score": "normal",
+					"place": "ItalyHome",
+					"mood": "good",
+					"moodDescription": "test",
 				},
 			],
 			'2022-01-04': [
@@ -117,7 +156,10 @@ describe('activitiesUtils', () => {
 					"duration": null,
 					"type": "relax",
 					"description": "Costruisco il sito per questo gestionale mentre guardo la tv coi miei (In più ho fatto una chiamata con Maria Luisa)",
-					"score": "good"
+					"score": "good",
+					"place": "ItalyHome",
+					"mood": "good",
+					"moodDescription": "test",
 				},
 			],
 		}

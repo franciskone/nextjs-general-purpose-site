@@ -47,12 +47,26 @@ const activityScoreStyles: Record<HealthinessScore, {
 
 const ActivityItemDateFormat = 'H:mm'
 
-const ActivityItem: FC<Activity> = ({start, end, type, description, score, duration}) => {
+const ActivityItem: FC<Activity> = ({
+  start,
+  end,
+  type,
+  description,
+  score,
+  duration,
+  mood,
+  moodDescription,
+  place,
+}) => {
 	const scoreKey = score || 'noScore'
-	const {color, Icon} = activityScoreStyles[scoreKey]
-	const bgColor = `${color}.50`
-	const fgColor = `${color}.500`
-	const badgeBgColor = `${color}.300`
+	const {color: scoreColor, Icon: ActivityIcon} = activityScoreStyles[scoreKey]
+	const bgColor = `${scoreColor}.50`
+	const fgColor = `${scoreColor}.500`
+	const badgeBgColor = `${scoreColor}.300`
+	
+	const { color: moodColor, Icon: MoodIcon } = activityScoreStyles[mood]
+	const moodBadgeBgColor = `${moodColor}.300`
+	const moodBadgeFgColor = `${moodColor}.500`
 	
 	// TODO Franciskone: fix bug
 	// check if it is working properly
@@ -74,13 +88,21 @@ const ActivityItem: FC<Activity> = ({start, end, type, description, score, durat
 			borderWidth={2}
 		>
 			<VStack alignItems="start">
-				<Badge bg={badgeBgColor} px={2} py={1} borderRadius={5}>
-					<HStack spacing={1}>
-						<Icon color={fgColor} w={5} h={5}/>
-						<Text fontSize='lg'>{type}</Text>
-					</HStack>
-				</Badge>
-				<Text fontSize='md'>{startDate} {`(${formattedDuration})`}</Text>
+				<HStack>
+					<Badge bg={badgeBgColor} px={2} py={1} borderRadius={5}>
+						<HStack spacing={1}>
+							<ActivityIcon color={fgColor} w={5} h={5}/>
+							<Text fontSize='lg'>{type}</Text>
+						</HStack>
+					</Badge>
+					<Badge bg={moodBadgeBgColor} px={2} py={1} borderRadius={5}>
+						<HStack spacing={1}>
+							<MoodIcon color={moodBadgeFgColor} w={5} h={5}/>
+							<Text fontSize='sm'>mood</Text>
+						</HStack>
+					</Badge>
+				</HStack>
+				<Text fontSize='md'>{place} - {startDate} {`(${formattedDuration})`}</Text>
 				<p>{description}</p>
 			</VStack>
 		</Box>
@@ -89,7 +111,7 @@ const ActivityItem: FC<Activity> = ({start, end, type, description, score, durat
 
 export const ActivityListByDate: FC<ActivitiesListByDateProps> = ({daysActivities}) => {
 	const daysData: [string, Activity[]][] = Object.entries(daysActivities)
-
+	
 	return (
 		<VStack
 			paddingY={2}
@@ -100,7 +122,7 @@ export const ActivityListByDate: FC<ActivitiesListByDateProps> = ({daysActivitie
 				<VStack
 					key={day}
 					alignItems="stretch"
-					divider={<StackDivider borderColor='gray.200' />}
+					divider={<StackDivider borderColor='gray.200'/>}
 					spacing={4}
 				>
 					<Heading as='h2' size='lg' isTruncated>

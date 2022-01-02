@@ -40,6 +40,9 @@ export async function getServerSideProps() {
 						type
 						description
 						score
+						mood
+						moodDescription
+						place
 					}
 				}
 			`
