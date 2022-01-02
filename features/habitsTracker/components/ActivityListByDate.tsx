@@ -36,11 +36,11 @@ const activityScoreStyles: Record<HealthinessScore, {
 		Icon: RemoveCircleIcon,
 	},
 	good: {
-		color: 'teal',
+		color: 'green',
 		Icon: CheckmarkCircleIcon,
 	},
 	veryGood: {
-		color: 'green',
+		color: 'teal',
 		Icon: CheckmarkDoneCircleIcon,
 	},
 }
