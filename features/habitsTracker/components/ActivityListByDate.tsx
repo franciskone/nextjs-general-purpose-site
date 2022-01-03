@@ -16,7 +16,7 @@ import {
     TimerIcon,
 } from 'chakra-ui-ionicons';
 import type {IconProps} from "@chakra-ui/icon";
-import {format} from 'date-fns';
+import {compareDesc, format} from 'date-fns';
 
 type Day = {
 	sleep?: Sleep
@@ -162,6 +162,14 @@ const SleepSummary: FC<Sleep> = ({
 
 export const ActivityListByDate: FC<ActivitiesListByDateProps> = ({days}) => {
 	const daysData: [string, Day][] = Object.entries(days)
+		.sort((firstEl, secondEl) => {
+			const [firstDate] = firstEl
+			const [secondDate] = secondEl
+			
+			const res = compareDesc(new Date(firstDate), new Date(secondDate))
+			debugger
+			return res
+		})
 	
 	return (
 		<VStack
