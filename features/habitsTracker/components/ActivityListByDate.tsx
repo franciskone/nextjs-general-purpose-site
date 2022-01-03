@@ -162,14 +162,7 @@ const SleepSummary: FC<Sleep> = ({
 
 export const ActivityListByDate: FC<ActivitiesListByDateProps> = ({days}) => {
 	const daysData: [string, Day][] = Object.entries(days)
-		.sort((firstEl, secondEl) => {
-			const [firstDate] = firstEl
-			const [secondDate] = secondEl
-			
-			const res = compareDesc(new Date(firstDate), new Date(secondDate))
-			debugger
-			return res
-		})
+		.sort(([firstDate], [secondDate]) => compareDesc(new Date(firstDate), new Date(secondDate)))
 	
 	return (
 		<VStack
