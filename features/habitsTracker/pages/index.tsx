@@ -2,16 +2,15 @@ import {gql} from '@apollo/client';
 import type {NextPage} from 'next'
 import Head from 'next/head'
 import {HabitsTrackerService} from "../services";
-import {ActivitiesListByDate, CmsActivity} from "../types";
-import {ActivityListByDate} from "../components/ActivityListByDate";
-import {activitiesListByDate} from "../utils/activitiesUtils";
+import {CmsActivity, CmsSleep} from "../types";
+import {ActivityListByDate, Days} from "../components/ActivityListByDate";
+import {activitiesListByDate, sleepsListByDate} from "../utils/activitiesUtils";
 
 type HabitsTrackerIndexProps = {
-	daysActivities: ActivitiesListByDate
+	days: Days
 }
 
-const HabitsTrackerIndex: NextPage<HabitsTrackerIndexProps> = ({daysActivities}) => {
-	
+const HabitsTrackerIndex: NextPage<HabitsTrackerIndexProps> = ({days}) => {
 	return (
 		<div>
 			<Head>
@@ -21,7 +20,7 @@ const HabitsTrackerIndex: NextPage<HabitsTrackerIndexProps> = ({daysActivities})
 			</Head>
 			
 			<main>
-				<ActivityListByDate daysActivities={daysActivities}/>
+				<ActivityListByDate days={days} />
 			</main>
 		</div>
 	)
@@ -48,11 +47,44 @@ export async function getServerSideProps() {
 			`
     }
   )
+  
+  const {data: { sleeps }} = await HabitsTrackerService.query<{ sleeps: CmsSleep[] }>(
+    {
+      query: gql`
+				query Sleeps {
+					sleeps(orderBy: wakeUpTime_DESC) {
+						sleepPlace
+						preSleepMoodScore
+						preSleepActivity
+						goToSleepTime
+						usedNosePlaster
+						usedMelatonine
+						sleepQuality
+						wakeUpTime
+					}
+				}
+			`
+    }
+  )
 	
-	debugger
+	const daysActivities = activitiesListByDate(activities)
+	const	daysSleeps = sleepsListByDate(sleeps)
+	
+	const days: Days = {}
+	
+	for(const day in daysActivities) {
+		if(!days[day]) days[day] = {}
+		days[day]['activities'] = daysActivities[day]
+	}
+	
+	for(const day in daysSleeps) {
+		if(!days[day]) days[day] = {}
+		days[day]['sleep'] = daysSleeps[day]
+	}
+	
 	return {
 		props: {
-			daysActivities: activitiesListByDate(activities)
-		}, // will be passed to the page component as props
+			days
+		},
 	}
 }

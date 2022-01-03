@@ -1,5 +1,5 @@
-import {activitiesListByDate} from "./activitiesUtils"
-import {ActivitiesListByDate, CmsActivity} from "../types";
+import {activitiesListByDate, sleepsListByDate} from "./activitiesUtils"
+import {ActivitiesListByDate, CmsActivity, CmsSleep, SleepsListByDate} from "../types";
 
 describe('activitiesUtils', () => {
 	it('activitiesListByDate', () => {
@@ -165,5 +165,68 @@ describe('activitiesUtils', () => {
 		}
 		
 		expect(activitiesListByDate(inputList)).toEqual(outputList)
+	})
+	
+	it('sleepsListByDate', () => {
+		// TODO Franciskone: fix test (weirdly not working)
+		const inputList: CmsSleep[] = [
+			{
+				"sleepPlace": "ItalyParents",
+				"preSleepMoodScore": "good",
+				"preSleepActivity": "watchTv",
+				"goToSleepTime": "2022-01-01T05:30:17.75+00:00",
+				"usedNosePlaster": false,
+				"usedMelatonine": null,
+				"sleepQuality": "veryGood",
+				"wakeUpTime": null
+			},
+			{
+				"sleepPlace": "ItalyParents",
+				"preSleepMoodScore": "veryGood",
+				"preSleepActivity": "watchTv",
+				"goToSleepTime": "2022-01-02T02:25:00+00:00",
+				"usedNosePlaster": false,
+				"usedMelatonine": true,
+				"sleepQuality": "good",
+				"wakeUpTime": "2022-01-02T10:01:00+00:00"
+			},
+			{
+				"sleepPlace": "ItalyParents",
+				"preSleepMoodScore": "good",
+				"preSleepActivity": "watchTv",
+				"goToSleepTime": null,
+				"usedNosePlaster": false,
+				"usedMelatonine": null,
+				"sleepQuality": "veryGood",
+				"wakeUpTime": '2022-01-03T12:30:17.75+00:00'
+			}
+		]
+		
+		const outputList: SleepsListByDate = {
+			'2022-01-02': {
+				"sleepPlace": "ItalyParents",
+				"preSleepMoodScore": "veryGood",
+				"preSleepActivity": "watchTv",
+				"goToSleepTime": "2022-01-02T02:25:00+00:00",
+				"usedNosePlaster": false,
+				"usedMelatonine": true,
+				"sleepQuality": "good",
+				"wakeUpTime": "2022-01-02T10:01:00+00:00",
+				'sleepDuration': 27360000,
+			},
+			'2021-01-03': {
+				"sleepPlace": "ItalyParents",
+				"preSleepMoodScore": "good",
+				"preSleepActivity": "watchTv",
+				"goToSleepTime": null,
+				"usedNosePlaster": false,
+				"usedMelatonine": null,
+				"sleepQuality": "veryGood",
+				"wakeUpTime": '2022-01-03T12:30:17.75+00:00',
+				'sleepDuration': null,
+			}
+		}
+
+		expect(sleepsListByDate(inputList)).toEqual(outputList)
 	})
 })

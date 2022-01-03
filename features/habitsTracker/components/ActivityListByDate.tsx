@@ -1,18 +1,31 @@
 import React from 'react'
 import type {FC} from 'react'
-import {ActivitiesListByDate, Activity, CmsActivity, HealthinessScore} from '../types'
+import {ActivitiesListByDate, Activity, CmsActivity, HealthinessScore, Sleep, SleepsListByDate} from '../types'
 import {Box, HStack, VStack, Text, Badge, Heading, StackDivider} from '@chakra-ui/react';
 import {
+	BandageIcon,
+	BatteryChargingIcon,
+	BedIcon,
 	CheckmarkCircleIcon,
 	CheckmarkDoneCircleIcon,
 	CloseCircleIcon,
+	EyedropIcon,
+	EyeIcon,
+	HeartIcon,
 	RemoveCircleIcon,
+    TimerIcon,
 } from 'chakra-ui-ionicons';
 import type {IconProps} from "@chakra-ui/icon";
 import {format} from 'date-fns';
 
+type Day = {
+	sleep?: Sleep
+	activities?: Activity[]
+}
+export type Days = Record<string, Day>
+
 export type ActivitiesListByDateProps = {
-	daysActivities: ActivitiesListByDate
+	days: Days
 }
 
 const activityScoreStyles: Record<HealthinessScore, {
@@ -45,7 +58,8 @@ const activityScoreStyles: Record<HealthinessScore, {
 	},
 }
 
-const ActivityItemDateFormat = 'H:mm'
+const ActivityItemDateFormat = 'K:mm aaa'
+const DurationDateFormat = "H'h':mm'm'"
 
 const ActivityItem: FC<Activity> = ({
   start,
@@ -75,7 +89,7 @@ const ActivityItem: FC<Activity> = ({
 	// TODO Franciskone: fix bug
 	// formattedDuration is not working, it's adding one hour to all durations
 	const formattedDuration = duration !== null
-		? format(duration, "H'h':mm'm'")
+		? format(duration, DurationDateFormat)
 		: null
 	
 	return (
@@ -109,8 +123,45 @@ const ActivityItem: FC<Activity> = ({
 	)
 }
 
-export const ActivityListByDate: FC<ActivitiesListByDateProps> = ({daysActivities}) => {
-	const daysData: [string, Activity[]][] = Object.entries(daysActivities)
+const SleepSummary: FC<Sleep> = ({
+  sleepPlace,
+	preSleepActivity,
+  goToSleepTime,
+  sleepDuration,
+  sleepQuality,
+  preSleepMoodScore,
+  usedNosePlaster,
+  usedMelatonine,
+}) => {
+	// TODO Franciskone: fix bug
+	// formattedDuration is not working, it's adding one hour to all durations
+	const formattedDuration = sleepDuration !== null
+		? format(sleepDuration, DurationDateFormat)
+		: null
+	
+	const items = []
+	
+	if(goToSleepTime != null) items.push(<Box><BedIcon />{` ${format(new Date(goToSleepTime), ActivityItemDateFormat)}`}</Box>)
+	if(formattedDuration != null) items.push(<Box><TimerIcon />{` ${formattedDuration}`}</Box>)
+	if(preSleepActivity != null) items.push(<Box><EyeIcon />{` ${preSleepActivity}`}</Box>)
+	if(preSleepMoodScore != null) items.push(<Box><HeartIcon />{` ${preSleepMoodScore}`}</Box>)
+	if(sleepQuality != null) items.push(<Box><BatteryChargingIcon />{` ${sleepQuality}`}</Box>)
+	if(usedNosePlaster != null) items.push(<Box><BandageIcon />{` ${usedNosePlaster ? 'sì' : 'no'}`}</Box>)
+	if(usedMelatonine != null) items.push(<Box><EyedropIcon />{` ${usedMelatonine ? 'sì' : 'no'}`}</Box>)
+	
+	return (
+		<HStack wrap="nowrap">
+			{items.map(item => (
+				<Badge bg="gray.100" px={2} py={1} borderRadius={5}>
+					<Text fontSize='lg'>{item}</Text>
+				</Badge>
+			))}
+		</HStack>
+	)
+}
+
+export const ActivityListByDate: FC<ActivitiesListByDateProps> = ({days}) => {
+	const daysData: [string, Day][] = Object.entries(days)
 	
 	return (
 		<VStack
@@ -118,18 +169,24 @@ export const ActivityListByDate: FC<ActivitiesListByDateProps> = ({daysActivitie
 			alignItems="stretch"
 			spacing={6}
 		>
-			{daysData.map(([day, activities]) => (
+			{daysData.map(([day, {sleep, activities}]) => (
 				<VStack
 					key={day}
 					alignItems="stretch"
 					divider={<StackDivider borderColor='gray.200'/>}
 					spacing={4}
 				>
-					<Heading as='h2' size='lg' isTruncated>
-						{day}
-					</Heading>
+					<VStack alignItems="stretch">
+						<Heading as='h2' size='lg' isTruncated>
+							{day}
+						</Heading>
+						{ sleep && <SleepSummary {...sleep} /> }
+					</VStack>
 					<VStack alignItems="stretch" spacing={4}>
-						{activities.map(activity => (<ActivityItem {...activity} key={`${activity.start}__${activity.type}`}/>))}
+						<Heading as='h3' size='md' isTruncated>
+							Activities
+						</Heading>
+						{activities?.map(activity => (<ActivityItem {...activity} key={`${activity.start}__${activity.type}`}/>))}
 					</VStack>
 				</VStack>
 			))}

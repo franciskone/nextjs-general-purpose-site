@@ -1,4 +1,6 @@
-export type ActivityType = string
+export type CmsActivityType = string
+export type CmsPlace = string
+export type CmsDateAndTime = string
 
 export type CommonHealthinessScore =
 	| 'veryBad'
@@ -14,16 +16,29 @@ export type HealthinessScore = CommonHealthinessScore
 	| 'noScore'
 
 export type CmsActivity = {
-	place: string
+	place: CmsPlace
 	mood: CommonHealthinessScore
 	moodDescription: string | null
-	start: string
-	end: string | null
-	type: ActivityType
+	start: CmsDateAndTime
+	end: CmsDateAndTime | null
+	type: CmsActivityType
 	description: string | null
 	score: CmsHealthinessScore
 }
 
+export type CmsSleep = {
+	sleepPlace: CmsPlace
+	preSleepMoodScore: CommonHealthinessScore | null
+	preSleepActivity: CmsActivityType | null
+	goToSleepTime: CmsDateAndTime | null
+	usedNosePlaster: boolean | null
+	usedMelatonine: boolean | null
+	sleepQuality: CmsHealthinessScore | null
+	wakeUpTime: CmsDateAndTime | null
+}
+
 export type Activity = CmsActivity & {duration: number | null}
+export type Sleep = CmsSleep & {sleepDuration: number | null}
 
 export type ActivitiesListByDate = Record<string, Activity[]>
+export type SleepsListByDate = Record<string, Sleep>
