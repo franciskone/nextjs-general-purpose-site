@@ -13,7 +13,7 @@ import {
 	EyeIcon,
 	HeartIcon,
 	RemoveCircleIcon,
-    TimerIcon,
+	TimerIcon,
 } from 'chakra-ui-ionicons';
 import type {IconProps} from "@chakra-ui/icon";
 import {compareDesc, format} from 'date-fns';
@@ -62,23 +62,23 @@ const ActivityItemDateFormat = 'K:mm aaa'
 const DurationDateFormat = "H'h':mm'm'"
 
 const ActivityItem: FC<Activity> = ({
-  start,
-  end,
-  type,
-  description,
-  score,
-  duration,
-  mood,
-  moodDescription,
-  place,
-}) => {
+	                                    start,
+	                                    end,
+	                                    type,
+	                                    description,
+	                                    score,
+	                                    duration,
+	                                    mood,
+	                                    moodDescription,
+	                                    place,
+                                    }) => {
 	const scoreKey = score || 'noScore'
 	const {color: scoreColor, Icon: ActivityIcon} = activityScoreStyles[scoreKey]
 	const bgColor = `${scoreColor}.50`
 	const fgColor = `${scoreColor}.500`
 	const badgeBgColor = `${scoreColor}.300`
 	
-	const { color: moodColor, Icon: MoodIcon } = activityScoreStyles[mood]
+	const {color: moodColor, Icon: MoodIcon} = activityScoreStyles[mood]
 	const moodBadgeBgColor = `${moodColor}.300`
 	const moodBadgeFgColor = `${moodColor}.500`
 	
@@ -124,15 +124,15 @@ const ActivityItem: FC<Activity> = ({
 }
 
 const SleepSummary: FC<Sleep> = ({
-  sleepPlace,
-	preSleepActivity,
-  goToSleepTime,
-  sleepDuration,
-  sleepQuality,
-  preSleepMoodScore,
-  usedNosePlaster,
-  usedMelatonine,
-}) => {
+	                                 sleepPlace,
+	                                 preSleepActivity,
+	                                 goToSleepTime,
+	                                 sleepDuration,
+	                                 sleepQuality,
+	                                 preSleepMoodScore,
+	                                 usedNosePlaster,
+	                                 usedMelatonine,
+                                 }) => {
 	// TODO Franciskone: fix bug
 	// formattedDuration is not working, it's adding one hour to all durations
 	const formattedDuration = sleepDuration !== null
@@ -141,13 +141,14 @@ const SleepSummary: FC<Sleep> = ({
 	
 	const items = []
 	
-	if(goToSleepTime != null) items.push(<Box><BedIcon />{` ${format(new Date(goToSleepTime), ActivityItemDateFormat)}`}</Box>)
-	if(formattedDuration != null) items.push(<Box><TimerIcon />{` ${formattedDuration}`}</Box>)
-	if(preSleepActivity != null) items.push(<Box><EyeIcon />{` ${preSleepActivity}`}</Box>)
-	if(preSleepMoodScore != null) items.push(<Box><HeartIcon />{` ${preSleepMoodScore}`}</Box>)
-	if(sleepQuality != null) items.push(<Box><BatteryChargingIcon />{` ${sleepQuality}`}</Box>)
-	if(usedNosePlaster != null) items.push(<Box><BandageIcon />{` ${usedNosePlaster ? 'sì' : 'no'}`}</Box>)
-	if(usedMelatonine != null) items.push(<Box><EyedropIcon />{` ${usedMelatonine ? 'sì' : 'no'}`}</Box>)
+	if (goToSleepTime != null) items.push(<Box><BedIcon/>{` ${format(new Date(goToSleepTime), ActivityItemDateFormat)}`}
+	</Box>)
+	if (formattedDuration != null) items.push(<Box><TimerIcon/>{` ${formattedDuration}`}</Box>)
+	if (preSleepActivity != null) items.push(<Box><EyeIcon/>{` ${preSleepActivity}`}</Box>)
+	if (preSleepMoodScore != null) items.push(<Box><HeartIcon/>{` ${preSleepMoodScore}`}</Box>)
+	if (sleepQuality != null) items.push(<Box><BatteryChargingIcon/>{` ${sleepQuality}`}</Box>)
+	if (usedNosePlaster != null) items.push(<Box><BandageIcon/>{` ${usedNosePlaster ? 'sì' : 'no'}`}</Box>)
+	if (usedMelatonine != null) items.push(<Box><EyedropIcon/>{` ${usedMelatonine ? 'sì' : 'no'}`}</Box>)
 	
 	return (
 		<HStack wrap="nowrap">
@@ -162,7 +163,7 @@ const SleepSummary: FC<Sleep> = ({
 
 export const ActivityListByDate: FC<ActivitiesListByDateProps> = ({days}) => {
 	const daysData: [string, Day][] = Object.entries(days)
-		.sort(([firstDate], [secondDate]) => compareDesc(new Date(firstDate), new Date(secondDate)))
+	.sort(([firstDate], [secondDate]) => compareDesc(new Date(firstDate), new Date(secondDate)))
 	
 	return (
 		<VStack
@@ -181,14 +182,16 @@ export const ActivityListByDate: FC<ActivitiesListByDateProps> = ({days}) => {
 						<Heading as='h2' size='lg' isTruncated>
 							{day}
 						</Heading>
-						{ sleep && <SleepSummary {...sleep} /> }
+						{sleep && <SleepSummary {...sleep} />}
 					</VStack>
-					<VStack alignItems="stretch" spacing={4}>
-						<Heading as='h3' size='md' isTruncated>
-							Activities
-						</Heading>
-						{activities?.map(activity => (<ActivityItem {...activity} key={`${activity.start}__${activity.type}`}/>))}
-					</VStack>
+					{activities &&
+	          <VStack alignItems="stretch" spacing={4}>
+	            <Heading as='h3' size='md' isTruncated>
+	              Activities
+	            </Heading>
+							{activities.map(activity => (<ActivityItem {...activity} key={`${activity.start}__${activity.type}`}/>))}
+	          </VStack>
+					}
 				</VStack>
 			))}
 		</VStack>
