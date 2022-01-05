@@ -1,16 +1,48 @@
 import {gql} from '@apollo/client';
-import type {NextPage} from 'next'
+import type {GetServerSidePropsContext, NextPage} from 'next'
 import Head from 'next/head'
 import {HabitsTrackerService} from "../services";
-import {CmsActivity, CmsSleep} from "../types";
+import {ActivityFiltersType, CmsActivity, CmsSleep} from "../types";
 import {ActivityListByDate, Days} from "../components/ActivityListByDate";
 import {activitiesListByDate, sleepsListByDate} from "../utils/activitiesUtils";
+import {activitiesFilters, isActivityInFilter} from "../utils/activityFilters";
+import {ActivityFilterBar, ActivityFilterBarProps} from "../components/ActivityFilterBar";
+import {useRouter} from "next/router";
 
 type HabitsTrackerIndexProps = {
 	days: Days
 }
 
 const HabitsTrackerIndex: NextPage<HabitsTrackerIndexProps> = ({days}) => {
+	const {pathname} = useRouter()
+	const activityFilters: ActivityFilterBarProps['filters'] = [
+		{
+			value: 'all',
+			label: 'All',
+			color: 'gray'
+		},
+		{
+			value: 'work',
+			label: 'Work',
+			color: 'blue'
+		},
+		{
+			value: 'allFood',
+			label: 'Food',
+			color: 'green'
+		},
+		{
+			value: 'sport',
+			label: 'Sport',
+			color: 'cyan'
+		},
+		{
+			value: 'allRelax',
+			label: 'Relax',
+			color: 'purple'
+		},
+	]
+	
 	return (
 		<div>
 			<Head>
@@ -20,6 +52,7 @@ const HabitsTrackerIndex: NextPage<HabitsTrackerIndexProps> = ({days}) => {
 			</Head>
 			
 			<main>
+				<ActivityFilterBar filters={activityFilters} path={pathname} />
 				<ActivityListByDate days={days} />
 			</main>
 		</div>
@@ -27,8 +60,8 @@ const HabitsTrackerIndex: NextPage<HabitsTrackerIndexProps> = ({days}) => {
 }
 
 export default HabitsTrackerIndex
-
-export async function getServerSideProps() {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+	const {query: { filter }} = context
   const {data: {activities}} = await HabitsTrackerService.query<{ activities: CmsActivity[] }>(
 		{
       query: gql`
@@ -67,7 +100,9 @@ export async function getServerSideProps() {
     }
   )
 	
-	const daysActivities = activitiesListByDate(activities)
+	const daysActivities = filter
+		? activitiesListByDate(activities.filter((activity) => isActivityInFilter(activity.type, filter as ActivityFiltersType)))
+		: activitiesListByDate(activities)
 	const	daysSleeps = sleepsListByDate(sleeps)
 	
 	const days: Days = {}

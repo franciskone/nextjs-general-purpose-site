@@ -38,6 +38,12 @@ export type CmsSleep = {
 }
 
 export type Activity = CmsActivity & {duration: number | null}
+export type ActivityFiltersType =
+	| 'all'
+	| 'allFood'
+	| 'sport'
+	| 'allRelax'
+	| 'work'
 export type Sleep = CmsSleep & {sleepDuration: number | null}
 
 export type ActivitiesListByDate = Record<string, Activity[]>
