@@ -41,6 +41,7 @@ const links: Link[] = [
 	}
 ]
 
+
 function MyApp({Component, pageProps}: AppProps) {
 	const {route} = useRouter()
 	
@@ -49,7 +50,8 @@ function MyApp({Component, pageProps}: AppProps) {
 			<Box p={4}>
 				<Nav links={links} currentPath={route} />
 				<Box paddingY={2}>
-					<Component {...pageProps} />
+					{/* @ts-ignore */}
+					<Component {...pageProps} /> || <div></div>
 				</Box>
 			</Box>
 		</ChakraProvider>
