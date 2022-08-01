@@ -3,7 +3,7 @@ import type {GetServerSidePropsContext, NextPage} from 'next'
 import Head from 'next/head'
 import {HabitsTrackerService} from "../services";
 import {ActivityFiltersType, CmsActivity, CmsSleep} from "../types";
-import {ActivityListByDate, Days} from "../components/ActivityListByDate";
+import {ActivityListByDate, DaysData} from "../components/ActivityListByDate";
 import {activitiesListByDate, sleepsListByDate} from "../utils/activitiesUtils";
 import {activitiesFilters, isActivityInFilter} from "../utils/activityFilters";
 import {ActivityFilterBar, ActivityFilterBarProps} from "../components/ActivityFilterBar";
@@ -14,6 +14,7 @@ type HabitsTrackerIndexProps = {
 }
 
 const HabitsTrackerIndex: NextPage<HabitsTrackerIndexProps> = ({days}) => {
+	debugger
 	const {pathname} = useRouter()
 	const activityFilters: ActivityFilterBarProps['filters'] = [
 		{

@@ -1,6 +1,6 @@
 import React from 'react'
 import type {FC} from 'react'
-import {ActivitiesListByDate, Activity, CmsActivity, HealthinessScore, Sleep, SleepsListByDate} from '../types'
+import {ActivitiesListByDate, Activity, CmsActivity, HealthinessScore, Sleep, SleepsListByDate, DayData, DaysData} from '../types'
 import {Box, HStack, VStack, Text, Badge, Heading, StackDivider} from '@chakra-ui/react';
 import {
 	BandageIcon,
@@ -18,14 +18,9 @@ import {
 import type {IconProps} from "@chakra-ui/icon";
 import {compareDesc, format} from 'date-fns';
 
-type Day = {
-	sleep?: Sleep
-	activities?: Activity[]
-}
-export type Days = Record<string, Day>
 
 export type ActivitiesListByDateProps = {
-	days: Days
+	days: DaysData
 }
 
 const activityScoreStyles: Record<HealthinessScore, {
@@ -62,16 +57,16 @@ const ActivityItemDateFormat = 'K:mm aaa'
 const DurationDateFormat = "H'h':mm'm'"
 
 const ActivityItem: FC<Activity> = ({
-	                                    start,
-	                                    end,
-	                                    type,
-	                                    description,
-	                                    score,
-	                                    duration,
-	                                    mood,
-	                                    moodDescription,
-	                                    place,
-                                    }) => {
+  start,
+  end,
+  type,
+  description,
+  score,
+  duration,
+  mood,
+  moodDescription,
+  place,
+}) => {
 	const scoreKey = score || 'noScore'
 	const {color: scoreColor, Icon: ActivityIcon} = activityScoreStyles[scoreKey]
 	const bgColor = `${scoreColor}.50`
@@ -162,7 +157,7 @@ const SleepSummary: FC<Sleep> = ({
 }
 
 export const ActivityListByDate: FC<ActivitiesListByDateProps> = ({days}) => {
-	const daysData: [string, Day][] = Object.entries(days)
+	const daysData: [string, DayData][] = Object.entries(days)
 	.sort(([firstDate], [secondDate]) => compareDesc(new Date(firstDate), new Date(secondDate)))
 	
 	return (

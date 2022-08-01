@@ -48,3 +48,10 @@ export type Sleep = CmsSleep & {sleepDuration: number | null}
 
 export type ActivitiesListByDate = Record<string, Activity[]>
 export type SleepsListByDate = Record<string, Sleep>
+
+export type DayData = {
+	sleep?: Sleep
+	activities?: Activity[]
+}
+
+export type DaysData = Record<string, DayData>
