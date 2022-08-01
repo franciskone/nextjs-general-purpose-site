@@ -1,6 +1,7 @@
 import {useRouter} from "next/router";
 import {travels} from "./data";
 import {FC} from "react";
+// @ts-ignore
 import {City, Travel, InfoItem, Event} from "./types";
 import {NextPage} from "next";
 import {Button, Heading, ListItem, UnorderedList, Link, Text} from "@chakra-ui/react";
@@ -77,6 +78,7 @@ const TravelUI: FC<Travel> = ({
 		</>
 	)
 }
+// @ts-ignore
 export const Travel: NextPage = () => {
 	const router = useRouter()
 	const {travelid} = router.query
