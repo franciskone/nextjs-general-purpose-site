@@ -27,13 +27,17 @@ const Nav: FC<Nav> = ({ links, currentPath }) => (
 )
 
 const links: Link[] = [
+	// {
+	// 	label: 'Home',
+	// 	path: '/',
+	// },
+	// {
+	// 	label: 'Habits tracker',
+	// 	path: '/habits-tracker',
+	// },
 	{
-		label: 'Home',
-		path: '/',
-	},
-	{
-		label: 'Habits tracker',
-		path: '/habits-tracker',
+		label: 'Israele 2022',
+		path: '/travel/2022-08-israel'
 	}
 ]
 
