@@ -1,7 +1,7 @@
 import {Box, Container, Button, Divider, Heading, HStack, Link, Stack, Text} from "@chakra-ui/react";
 import type {NextPage} from "next";
 import { AirplaneIcon, BedIcon, BookIcon, MapIcon, TrainIcon } from 'chakra-ui-ionicons';
-import {thaiTravelData} from "./data";
+import {thaiTravelData} from "../../features/2022-11-thai/data";
 
 const Page: NextPage = () => {
 	const iconColor = 'gray.600'
@@ -12,7 +12,7 @@ const Page: NextPage = () => {
 			</Heading>
 			<Divider marginY={3} color="gray.500"/>
 			{thaiTravelData.map(({days, city, flight, train, sleepName, sleepMapsUrl, sleepBookingPlatform}) => (
-				<Box paddingTop={2} >
+				<Box key={days} paddingTop={2} >
 					<Box padding={2} bgColor="gray.200" borderRadius={5}>
 						<Heading as='h2' size='lg' noOfLines={1}>{days}</Heading>
 					</Box>
