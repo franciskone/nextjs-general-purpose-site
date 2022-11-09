@@ -47,11 +47,11 @@ function MyApp({Component, pageProps}: AppProps) {
 	
 	return (
 		<ChakraProvider resetCSS>
-			<Box p={4}>
-				<Nav links={links} currentPath={route} />
+			<Box>
+				{/*<Nav links={links} currentPath={route} />*/}
 				<Box paddingY={2}>
 					{/* @ts-ignore */}
-					<Component {...pageProps} /> || <div></div>
+					<Component {...pageProps} />
 				</Box>
 			</Box>
 		</ChakraProvider>
