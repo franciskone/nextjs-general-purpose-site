@@ -77,7 +77,7 @@ export const thaiTravelData: DataList = [
 	},
 	{
 		days: '2022/12/07',
-		train: 'Bangkok 19:35 -> Chiang Mai 08:40',
+		train: 'Bangkok 19:35 -> Chiang Mai 08:40 (+1)',
 		sleepName: 'Night train #13',
 		sleepMapsUrl: 'https://www.train36.com/train-13-timetable-thailand.html',
 	},
