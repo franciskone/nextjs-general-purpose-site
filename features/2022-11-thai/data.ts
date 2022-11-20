@@ -112,7 +112,7 @@ export const thaiTravelData: DataList = [
 		sleepName: 'Casa Francesco',
 	},
 	{
-		days: '2022/12/20',
+		days: '2022/12/19',
 		flight: 'Londra (GTW) 15:10 -> Roma (FCO) 18:40',
 		sleepName: 'Casa Roma',
 	},
